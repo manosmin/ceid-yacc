@@ -1,0 +1,81 @@
+<NUMBERS> ::= <POSITIVEREAL> | "-" <POSITIVEREAL>
+<POSITIVEINTEGER> ::= [0-9] | [1-9] [0-9]+
+<POSITIVEREAL> ::= ((<POSITIVEINTEGER>) "." (<POSITIVEINTEGER>)+) | (<POSITIVEINTEGER>)
+<DIGITS> ::= [0-9]
+<BOOLEAN> ::= "true" | "false"
+<UNICODE> ::=  "!" | "@" | "#" | "$" | "%" | "^" | "&" | "*" | "(" | ")" | "_" | "-" | "=" | "+" | "/" | "\\" | "{" | "}" | ":" | "." | ","
+<STRING> ::= "\"" ( [a-z] | [A-Z] | <UNICODE> | <DIGITS> )*  "\""
+<JSONARRAY> ::= ( "[" (<STRING> <COMMA> | <NUMBERS> <COMMA>)* (<STRING> | <NUMBERS>) "]" ) | ("[" (<STRING> | <NUMBERS>) "]" ) | ( "[" "]")
+<COMMA> ::= ","
+<HOOKLEFT> ::= "{"
+<HOOKRIGHT> ::= "}"
+<BRACKETLEFT> ::= "["
+<BRACKETRIGHT> ::= "]"
+<COLON> ::= ":"
+
+<ElemObject> ::= <HOOKLEFT> <ElemLast> <COMMA> <ElemActive> <HOOKRIGHT> | <HOOKLEFT> <ElemContent> <COMMA> <ElemTotalPages> <COMMA> <ElemTotalElements> <COMMA> <ElemLastBool> <COMMA> <ElemNumberOfElements> <COMMA> <ElemSort> <COMMA> <ElemFirst> <COMMA> <ElemSize> <COMMA> <ElemNumber> <HOOKRIGHT>  
+
+<ElemContent> ::= <STRING> <COLON> <BRACKETLEFT> (<ElemContentExpand> <COMMA>?)+ <BRACKETRIGHT>  
+    <ElemContentExpand> ::= <HOOKLEFT> <ElemGameId> <COMMA>  <ElemDrawId> <COMMA>  <ElemDrawTime> <COMMA>  <ElemStatus> <COMMA>  <ElemDrawBreak> <COMMA>  <ElemVisualDraw> <COMMA> <ElemPricePoints> <COMMA> <ElemWinningNumbers> <COMMA> <ElemPrizeCategories> (<COMMA>  <ElemWagerStatistics>)? <HOOKRIGHT>
+
+<ElemLast> ::= <STRING> <COLON> <HOOKLEFT> <ElemGameId> <COMMA>  <ElemDrawId> <COMMA>  <ElemDrawTime> <COMMA>  <ElemStatus> <COMMA>  <ElemDrawBreak> <COMMA>  <ElemVisualDraw> <COMMA> <ElemPricePoints> <COMMA> <ElemWinningNumbers> <COMMA> <ElemPrizeCategories> (<COMMA>  <ElemWagerStatistics>)? <HOOKRIGHT>
+
+<ElemWinningNumbers> ::= <STRING> <COLON> <HOOKLEFT> <STRING> <COLON> <ElemList> <COMMA> <STRING> <COLON> <ElemBonus> <HOOKRIGHT>
+
+    <ElemList> ::= (<BRACKETLEFT> ((<POSITIVEINTEGER> <COMMA>)* <POSITIVEINTEGER>)* <BRACKETRIGHT>) | (<BRACKETLEFT> <POSITIVEINTEGER> <BRACKETRIGHT>)
+    <ElemBonus> ::= <BRACKETLEFT> <POSITIVEINTEGER> <BRACKETRIGHT>
+
+<ElemActive> ::= <STRING> <COLON> <HOOKLEFT> <ElemGameId> <COMMA> <ElemDrawId> <COMMA> <ElemDrawTime> <COMMA> <ElemStatus> <COMMA> <ElemDrawBreak> <COMMA> <ElemVisualDraw> <COMMA> <ElemPricePoints> <COMMA> <ElemPrizeCategories> (<COMMA>  <ElemWagerStatistics>)? <HOOKRIGHT> 
+
+    <ElemGameId> ::= <STRING> <COLON> <POSITIVEINTEGER>
+    <ElemDrawId> ::= <STRING> <COLON> <POSITIVEINTEGER>
+    <ElemDrawTime> ::= <STRING> <COLON> <POSITIVEINTEGER>
+    <ElemStatus> ::= <STRING> <COLON> <STRING>
+    <ElemDrawBreak> ::= <STRING> <COLON> <POSITIVEINTEGER>
+    <ElemVisualDraw> ::= <STRING> <COLON> <POSITIVEINTEGER>
+    <ElemPricePoints> ::= <STRING> <COLON> <HOOKLEFT> <STRING> <COLON>  <POSITIVEREAL> <HOOKRIGHT>
+
+<ElemPrizeCategories> ::= <STRING> <COLON> <BRACKETLEFT> (<COMMA>? <ElemTempObj1> | <COMMA>? <ElemTempObj2>)* <BRACKETRIGHT> 
+
+    <ElemTempObj1> ::= <HOOKLEFT> <ElemId1> <COMMA>  <ElemDivident> <COMMA> <ElemWinners> <COMMA>  <ElemDistributed> <COMMA> <ElemJackpot> <COMMA>  <ElemFixed> <COMMA>  <ElemCategoryType> <COMMA>  <ElemGameType> <HOOKRIGHT>
+
+    <ElemTempObj2> ::= <HOOKLEFT> <ElemId2> <COMMA>  <ElemDivident> <COMMA> <ElemWinners> <COMMA>  <ElemDistributed> <COMMA> <ElemJackpot> <COMMA>  <ElemFixed> <COMMA>  <ElemCategoryType> <COMMA>  <ElemGameType> (<COMMA> <ElemMinDist>)? <HOOKRIGHT>
+
+    <ElemId1> ::= <STRING> <COLON> [2-8]
+    <ElemId2> ::= <STRING> <COLON> "1"
+    <ElemDivident> ::= <STRING> <COLON> <POSITIVEREAL>
+    <ElemWinners> ::= <STRING> <COLON> <POSITIVEINTEGER>
+    <ElemDistributed> ::= <STRING> <COLON> <POSITIVEREAL>
+    <ElemJackpot> ::= <STRING> <COLON> <POSITIVEREAL>
+    <ElemFixed> ::= <STRING> <COLON> <POSITIVEREAL>
+    <ElemCategoryType> ::= <STRING> <COLON> [0-1]
+    <ElemGameType> ::= <STRING> <COLON> <STRING>
+    <ElemMinDist> ::= <STRING> <COLON> <POSITIVEREAL>
+
+<ElemWagerStatistics> ::= <STRING> <COLON> <HOOKLEFT> <ElemColumns> <COMMA> <ElemWagers> <COMMA> <ElemAddOn> <HOOKRIGHT> 
+    <ElemColumns> ::= <STRING> <COLON> <POSITIVEINTEGER>
+    <ElemWagers> ::= <STRING> <COLON> <POSITIVEINTEGER>
+    <ElemAddOn> ::= <STRING> <COLON> <JSONARRAY>
+
+<ElemTotalPages> ::= <STRING> <COLON> <POSITIVEINTEGER>
+
+<ElemTotalElements> ::= <STRING> <COLON> <POSITIVEINTEGER>
+
+<ElemLastBool> ::= <STRING> <COLON> <BOOLEAN>
+
+<ElemNumberOfElements> ::= <STRING> <COLON> <POSITIVEINTEGER>
+
+<ElemSort> ::= <STRING> <COLON> <BRACKETLEFT> (<COMMA>? <ElemTempObj3>) <BRACKETRIGHT>
+     
+    <ElemTempObj3> ::= <HOOKLEFT> <ElemDirection> <COMMA> <ElemProperty> <COMMA> <ElemIgnoreCase> <COMMA> <ElemNullHandling> <COMMA> <ElemDescending> <COMMA> <ElemAscending> <HOOKRIGHT>
+     
+    <ElemDirection> ::= <STRING> <COLON> <STRING>
+    <ElemProperty> ::= <STRING> <COLON> <STRING>
+    <ElemIgnoreCase> ::= <STRING> <COLON> <BOOLEAN>
+    <ElemNullHandling> ::= <STRING> <COLON> <STRING>
+    <ElemDescending> ::= <STRING> <COLON> <BOOLEAN>
+    <ElemAscending> ::= <STRING> <COLON> <BOOLEAN>
+
+<ElemFirst> ::= <STRING> <COLON> <BOOLEAN>
+<ElemSize> ::= <STRING> <COLON> <POSITIVEINTEGER>
+<ElemNumber> ::= <STRING> <COLON> <POSITIVEINTEGER>
