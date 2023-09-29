@@ -22,7 +22,7 @@ To deploy this project run
 where `test.txt` is the file that gets parsed.
 ## Screenshots
 *Successful File Validation*
-![App Screenshot](https://github.com/manosmin/ceid-yacc/tree/master/screenshots/valid.png)
+![App Screenshot](https://github.com/manosmin/ceid-yacc/blob/master/screenshots/valid.png)
 *Unsuccessful File Validation*
-![App Screenshot](https://github.com/manosmin/ceid-yacc/tree/master/screenshots/invalid.png)
+![App Screenshot](https://github.com/manosmin/ceid-yacc/blob/master/screenshots/invalid.png)
 
