@@ -20,9 +20,4 @@ To deploy this project run
 ```
 
 where `test.txt` is the file that gets parsed.
-## Screenshots
-*Successful File Validation* </br>
-![App Screenshot](https://github.com/manosmin/ceid-yacc/blob/master/screenshots/valid.png) </br>
-*Unsuccessful File Validation*</br>
-![App Screenshot](https://github.com/manosmin/ceid-yacc/blob/master/screenshots/invalid.png)</br>
 
